@@ -9,7 +9,7 @@ import org.springframework.lang.Nullable;
 
 import java.util.Date;
 
-@Entity
+@Entity(name = "comments")
 @Getter
 @Setter
 @ToString
