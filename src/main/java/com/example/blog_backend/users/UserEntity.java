@@ -8,7 +8,6 @@ import org.springframework.lang.Nullable;
 @Entity(name = "users")
 @Getter
 @Setter
-@Builder
 @ToString
 @RequiredArgsConstructor
 @NoArgsConstructor(access =  AccessLevel.PROTECTED)
@@ -18,7 +17,6 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(nullable = false)
-    @NonNull
     private Long id;
 
     @Column(nullable = false)

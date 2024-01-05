@@ -1,23 +1,23 @@
 package com.example.blog_backend.users;
 
 import com.example.blog_backend.users.dtos.CreateUserRequest;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
 
-    public UserService(UserRepository userRepository){
+
+    public UserService(UserRepository userRepository,ModelMapper modelMapper){
         this.userRepository=userRepository;
+        this.modelMapper=modelMapper;
     }
 
     public UserEntity createUser(CreateUserRequest req){
-        var newUser = UserEntity.builder()
-                .username(req.getUsername())
-                .email(req.getEmail())
-                //.password(req.getPassword()) todo : make it encrypted
-                .build();
+        UserEntity newUser = modelMapper.map(req , UserEntity.class);
 
         return userRepository.save(newUser);
     }
@@ -33,6 +33,7 @@ public class UserService {
 
     public UserEntity loginUser(String username, String password){
         var user = userRepository.findByUsername(username).orElseThrow(()->new UserNotFoundException(username));
+
         return user;
     }
 
