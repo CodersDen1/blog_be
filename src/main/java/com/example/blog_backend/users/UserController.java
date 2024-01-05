@@ -38,6 +38,10 @@ public class UserController {
     }
 
 
+    @GetMapping("")
+    public String hello(){
+        return "hello world api";
+    }
 
 
 
