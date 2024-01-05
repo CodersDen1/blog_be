@@ -46,7 +46,10 @@ public class UserController {
 
 
 
-    @ExceptionHandler({UserService.UserNotFoundException.class})
+    @ExceptionHandler({
+            UserService.UserNotFoundException.class,
+            UserService.InvalidCredentialsException.class
+    })
     ResponseEntity<ErrorResponse>handleUserNotFoundException(Exception e){
         String message;
         HttpStatus status;
@@ -54,6 +57,10 @@ public class UserController {
         if (e instanceof UserService.UserNotFoundException){
             message = e.getMessage();
             status = HttpStatus.NOT_FOUND;
+        }
+        else if(e instanceof UserService.InvalidCredentialsException){
+            message = e.getMessage();
+            status = HttpStatus.UNAUTHORIZED;
         }
         else{
             message="something went worng";
