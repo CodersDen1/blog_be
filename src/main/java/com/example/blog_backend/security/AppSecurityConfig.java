@@ -22,7 +22,9 @@ public class AppSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorizeHttpRequest) -> authorizeHttpRequest
-                        .requestMatchers(HttpMethod.POST, "/users", "/users/login").permitAll().anyRequest().authenticated()).formLogin(Customizer.withDefaults());
+                        .requestMatchers(HttpMethod.POST, "/users", "/users/login").permitAll()
+                        .requestMatchers(HttpMethod.GET , "/*" , "/h2-console/**").permitAll().anyRequest().authenticated()
+                ).formLogin(Customizer.withDefaults());
 
 
         return http.build();
