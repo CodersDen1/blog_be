@@ -1,6 +1,7 @@
 package com.example.blog_backend.users;
 
 import com.example.blog_backend.common.dtos.ErrorResponse;
+import com.example.blog_backend.security.JWTService;
 import com.example.blog_backend.users.dtos.CreateUserRequest;
 import com.example.blog_backend.users.dtos.LoginUserRequest;
 import com.example.blog_backend.users.dtos.UserResponse;
@@ -18,23 +19,38 @@ public class UserController {
 
     private final  UserService userService;
     private final ModelMapper modelMapper;
+    private final JWTService jwtService;
 
-    public UserController(UserService userService , ModelMapper modelMapper){
+    public UserController(UserService userService , ModelMapper modelMapper , JWTService jwtService){
 
         this.userService=userService;
         this.modelMapper=modelMapper;
+        this.jwtService=jwtService;
     }
     @PostMapping("")
     ResponseEntity<UserResponse> signUpUser(@RequestBody CreateUserRequest request){
         var savedUser = userService.createUser(request);
         URI savedUserUri = URI.create("/users/"+savedUser.getId());
-        return ResponseEntity.created(savedUserUri).body(modelMapper.map(savedUser ,UserResponse.class));
+
+        var savedUserResponse = modelMapper.map(savedUser,UserResponse.class);
+
+        savedUserResponse.setToken(
+                jwtService.createHJwt(savedUser.getId())
+        );
+
+        return ResponseEntity.created(savedUserUri)
+                .body(savedUserResponse);
     }
 
     @PostMapping("/login")
     ResponseEntity<UserResponse> loginUser(@RequestBody LoginUserRequest request){
         UserEntity savedUser = userService.loginUser(request.getUsername(), request.getPassword());
-        return ResponseEntity.ok(modelMapper.map(savedUser,UserResponse.class));
+        var userResponse = modelMapper.map(savedUser,UserResponse.class);
+        userResponse.setToken(
+                jwtService.createHJwt(savedUser.getId())
+        );
+
+        return ResponseEntity.ok(userResponse);
     }
 
 

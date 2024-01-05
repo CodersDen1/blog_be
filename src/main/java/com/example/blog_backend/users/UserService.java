@@ -1,5 +1,6 @@
 package com.example.blog_backend.users;
 
+import com.example.blog_backend.security.JWTService;
 import com.example.blog_backend.users.dtos.CreateUserRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,10 +13,12 @@ public class UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
+
     public UserService(UserRepository userRepository,ModelMapper modelMapper,PasswordEncoder passwordEncoder){
         this.userRepository=userRepository;
         this.modelMapper=modelMapper;
         this.passwordEncoder=passwordEncoder;
+
     }
 
     public UserEntity createUser(CreateUserRequest req){
