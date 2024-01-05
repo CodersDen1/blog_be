@@ -1,5 +1,6 @@
 package com.example.blog_backend.articles.dtos;
 
+import com.example.blog_backend.users.UserEntity;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -17,6 +18,8 @@ public class UpdateArticleRequest {
 
     @Nullable
     private String subtitle;
+
+    private UserEntity authorId;
 
 
 }

@@ -18,8 +18,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class ArticleEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE )
+    @Column(nullable = false , unique = true)
     private Long id;
 
     @NonNull

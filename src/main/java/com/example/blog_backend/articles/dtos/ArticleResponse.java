@@ -11,4 +11,5 @@ public class ArticleResponse {
     String subtitle;
     String slug;
 
+
 }

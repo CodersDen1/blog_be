@@ -57,10 +57,10 @@ public class ArticleService {
          article.setTitle(req.getTitle());
         }
         if(req.getBody()!=null){
-            article.setTitle(req.getBody());
+            article.setBody(req.getBody());
         }
         if(req.getSubtitle()!=null){
-            article.setTitle(req.getSubtitle());
+            article.setSubtitle(req.getSubtitle());
         }
 
         return articleRepository.save(article);

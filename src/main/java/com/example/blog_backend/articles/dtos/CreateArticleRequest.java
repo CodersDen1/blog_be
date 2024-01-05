@@ -18,7 +18,9 @@ public class CreateArticleRequest {
    @Nullable
     private String subtitle;
 
-   private UserEntity authorId;
+   private UserEntity userEntity;
+
+
 
 
 }

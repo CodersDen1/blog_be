@@ -2,6 +2,7 @@ package com.example.blog_backend.articles;
 
 import com.example.blog_backend.articles.dtos.ArticleResponse;
 import com.example.blog_backend.articles.dtos.CreateArticleRequest;
+import com.example.blog_backend.articles.dtos.UpdateArticleRequest;
 import com.example.blog_backend.users.UserEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,22 @@ public class ArticleController {
         var article = articleService.getArticleById(id);
 
         return ResponseEntity.ok(article);
+    }
+
+    @GetMapping("/{slug}")
+    ResponseEntity<ArticleResponse> getArticleBySlug(@PathVariable("slug") String slug){
+        var article =articleService.getArticleBySlug(slug);
+        ArticleResponse response = modelMapper.map(article,ArticleResponse.class);
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{id}")
+    ResponseEntity<ArticleResponse> updateArticle(@PathVariable("id") Long articleId , @RequestBody UpdateArticleRequest req){
+        var article = articleService.updateArticle(req,articleId);
+
+        ArticleResponse response = modelMapper.map(article , ArticleResponse.class);
+         return ResponseEntity.ok(response);
+
     }
 
     @PostMapping("")
