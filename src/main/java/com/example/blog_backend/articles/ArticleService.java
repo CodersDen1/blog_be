@@ -6,6 +6,8 @@ import com.example.blog_backend.users.UserRepository;
 import com.example.blog_backend.users.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ArticleService {
     private final ArticleRepository articleRepository;
@@ -27,6 +29,12 @@ public class ArticleService {
         }
 
         return article;
+    }
+
+    public Optional<ArticleEntity> getArticleById(Long id){
+        var article = articleRepository.findById(id).orElseThrow(()-> new ArticleNotFoundException(id));
+
+        return Optional.ofNullable(article);
     }
 
     public ArticleEntity createNewArticle(CreateArticleRequest req , Long authorId){
@@ -57,6 +65,8 @@ public class ArticleService {
 
         return articleRepository.save(article);
     }
+
+
 
 
     public static class ArticleNotFoundException extends IllegalArgumentException{

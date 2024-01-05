@@ -35,7 +35,7 @@ public class UserController {
         var savedUserResponse = modelMapper.map(savedUser,UserResponse.class);
 
         savedUserResponse.setToken(
-                jwtService.createHJwt(savedUser.getId())
+                jwtService.createJwt(savedUser.getId())
         );
 
         return ResponseEntity.created(savedUserUri)
@@ -47,7 +47,7 @@ public class UserController {
         UserEntity savedUser = userService.loginUser(request.getUsername(), request.getPassword());
         var userResponse = modelMapper.map(savedUser,UserResponse.class);
         userResponse.setToken(
-                jwtService.createHJwt(savedUser.getId())
+                jwtService.createJwt(savedUser.getId())
         );
 
         return ResponseEntity.ok(userResponse);
