@@ -3,6 +3,8 @@ package com.example.blog_backend.articles;
 import com.example.blog_backend.articles.dtos.ArticleResponse;
 import com.example.blog_backend.articles.dtos.CreateArticleRequest;
 import com.example.blog_backend.articles.dtos.UpdateArticleRequest;
+import com.example.blog_backend.comments.CommentEntity;
+import com.example.blog_backend.comments.CommentService;
 import com.example.blog_backend.users.UserEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -12,18 +14,21 @@ import org.springframework.web.bind.annotation.*;
 import com.example.blog_backend.common.dtos.ErrorResponse;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/articles")
 public class ArticleController {
     private final ArticleService articleService;
+    private final CommentService commentService;
     private final ModelMapper modelMapper;
 
 
-    public ArticleController(ArticleService articleService, ModelMapper modelMapper) {
+    public ArticleController(ArticleService articleService, ModelMapper modelMapper , CommentService commentService) {
         this.articleService = articleService;
         this.modelMapper = modelMapper;
+        this.commentService=commentService;
     }
 
     @GetMapping("")
@@ -45,6 +50,12 @@ public class ArticleController {
         var article =articleService.getArticleBySlug(slug);
         ArticleResponse response = modelMapper.map(article,ArticleResponse.class);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{articleId}/comments")
+    ResponseEntity<List<CommentEntity>> getCommentByArticleId(@PathVariable("articleId") Long articleId){
+        List<CommentEntity> comments = commentService.getCommentByArticleId(articleId);
+        return  ResponseEntity.ok(comments);
     }
 
     @PatchMapping("/{id}")

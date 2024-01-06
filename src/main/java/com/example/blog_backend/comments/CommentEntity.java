@@ -13,8 +13,10 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
+@Builder
 @RequiredArgsConstructor
 @NoArgsConstructor(access =  AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -37,5 +39,5 @@ public class CommentEntity {
 
     @ManyToOne
     @JoinColumn(name = "authorid" , nullable = false)
-    private UserEntity user;
+    private UserEntity author;
 }

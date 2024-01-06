@@ -40,7 +40,7 @@ public class AppSecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorizeHttpRequest) -> authorizeHttpRequest
                         .requestMatchers(HttpMethod.POST, "/users", "/users/login" , "/articles").permitAll()
-                        .requestMatchers(HttpMethod.GET,   "/articles","/articles/{id}").permitAll().anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.GET,   "/**"  ).permitAll().anyRequest().authenticated()
                 ).formLogin(Customizer.withDefaults());
         http.addFilterBefore(jwtAuthenticationFilter, AnonymousAuthenticationFilter.class);
 
