@@ -32,7 +32,7 @@ public class ArticleController {
         return ResponseEntity.ok((ArrayList<ArticleEntity>) articles);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     ResponseEntity<Optional<ArticleEntity>> getArticleById(@PathVariable("id") Long id ){
 
         var article = articleService.getArticleById(id);
@@ -40,7 +40,7 @@ public class ArticleController {
         return ResponseEntity.ok(article);
     }
 
-    @GetMapping("/{slug}")
+    @GetMapping("/slug/{slug}")
     ResponseEntity<ArticleResponse> getArticleBySlug(@PathVariable("slug") String slug){
         var article =articleService.getArticleBySlug(slug);
         ArticleResponse response = modelMapper.map(article,ArticleResponse.class);
