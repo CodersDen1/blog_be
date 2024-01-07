@@ -1,5 +1,6 @@
 package com.example.blog_backend.users;
 
+import com.example.blog_backend.articles.dtos.ArticleResponse;
 import com.example.blog_backend.common.dtos.ErrorResponse;
 import com.example.blog_backend.security.JWTService;
 import com.example.blog_backend.users.dtos.CreateUserRequest;
@@ -59,6 +60,13 @@ public class UserController {
         return "hello world api";
     }
 
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> getUserById(@PathVariable("id") Long userId){
+        var user = userService.getUser(userId);
+        UserResponse response = modelMapper.map(user , UserResponse.class);
+        return ResponseEntity.ok(response);
+    }
 
 
 

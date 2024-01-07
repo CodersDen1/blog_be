@@ -9,6 +9,6 @@ public class UserResponse {
     private String username;
     private  String email;
     private String bio;
-    private  String image;
+    private  byte[] image;
     private String token;
 }

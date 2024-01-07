@@ -37,6 +37,7 @@ public class UserEntity {
 
     @Column(nullable = true)
     @Nullable
-    private String image;
+    @Lob
+    byte [] image;
 
 }
